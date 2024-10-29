@@ -10,7 +10,7 @@ class TestDealershipClass {
     @org.junit.jupiter.api.Test
     void getVehiclesByPrice_should_return_vehicle_list_with_matching_prices() {
         Dealership dealership = new Dealership("Scott clark Toyota", "392 shield rd", "980-269-4322");
-        dealership.addVehicle(new Vehicle(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
+        dealership.addVehicle(new VehicleforDummies(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
 
         List<Vehicle> vehicle = List.of(new Vehicle(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
 

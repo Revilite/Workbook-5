@@ -1,6 +1,6 @@
 package com.pluralsight.contract;
 
-import com.pluralsight.cars.VehicleforDummies;
+import com.pluralsight.cars.Vehicle;
 
 public class LeaseContract extends Contract {
     protected double expectedEndingValue;
@@ -9,7 +9,7 @@ public class LeaseContract extends Contract {
 
 
 
-    public LeaseContract(String date, String customerName, String customerEmail, VehicleforDummies vehicleSold) {
+    public LeaseContract(String date, String customerName, String customerEmail, Vehicle vehicleSold) {
         super(date, customerName, customerEmail, vehicleSold);
         expectedEndingValue = vehicleSold.getPrice() / 2;
         leaseFee = vehicleSold.getPrice() * .07;
@@ -19,11 +19,11 @@ public class LeaseContract extends Contract {
 
     @Override
     public double getMonthlyPayment() {
-        return 0;
+        return expectedEndingValue * .04;
     }
 
     @Override
     public double getTotalPrice() {
-        return 0;
+        return (expectedEndingValue + (expectedEndingValue * monthlyPayment) * loanAmount) + leaseFee;
     }
 }

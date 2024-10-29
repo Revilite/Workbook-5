@@ -1,10 +1,15 @@
 package com.pluralsight.cars;
 
 import com.pluralsight.cars.JavaHelpers.ColorCodes;
+import com.pluralsight.contract.Contract;
+import com.pluralsight.contract.ContractDataManager;
+import com.pluralsight.contract.LeaseContract;
+import com.pluralsight.contract.SalesContract;
 
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Scanner;
+import java.time.LocalDate;
 
 public class UserInterface {
     private Dealership dealership;
@@ -39,6 +44,7 @@ public class UserInterface {
                     ║ All                                (7)   ║
                     ║ Add a vehicle                      (8)   ║
                     ║ Remove a vehicle                   (9)   ║
+                    ║ Sell/Lease a vehicle               (10)  ║
                     ║ Quit                               (99)  ║
                     ╚══════════════════════════════════════════╝%s
                     %n""", ColorCodes.BLUE, ColorCodes.RESET);
@@ -71,6 +77,9 @@ public class UserInterface {
                     break;
                 case ("9"):
                     processRemoveVehicleRequest();
+                    break;
+                case ("10"):
+                    processSellLeaseVehicle();
                     break;
                 case ("99"):
                     break;
@@ -109,7 +118,7 @@ public class UserInterface {
                 sb.append("╠═════════════╩══════════════╩════════════╩══════════════╩═════════════╩═════════════════╣\n");
                 sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(ColorCodes.RESET).append("║").append("\n");
 
-            //Used as the footer for the list
+                //Used as the footer for the list
             } else if (listOfVehicle.get(listOfVehicle.size() - 1) == vehicle) {
                 sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(ColorCodes.RESET).append("║").append("\n");
                 sb.append("╚════════════════════════════════════════════════════════════════════════════════════════╝\n");
@@ -137,7 +146,7 @@ public class UserInterface {
             System.out.println("What is the minimum " + prompt + " you are looking for? (Enter 'x' to break)");
             String min = scan.nextLine();
             try {
-                //Returns a unsearchable value if the user inputs x
+                //Returns an unsearchable value if the user inputs x
                 if (min.equalsIgnoreCase("x")) {
                     return new int[]{-1, -1};
                 }
@@ -156,7 +165,7 @@ public class UserInterface {
             System.out.println("What is the maximum " + prompt + " you are looking for? (Enter 'x' to break)");
             try {
                 String max = scan.nextLine();
-                //Returns a unsearchable value if the user inputs x
+                //Returns an unsearchable value if the user inputs x
                 if (max.equalsIgnoreCase("x")) {
                     return new int[]{-1, -1};
                 }
@@ -174,7 +183,6 @@ public class UserInterface {
         }
         return new int[]{minNumber, maxNumber};
     }
-
 
     public void processGetByPriceRequest() {
         int[] userRange = getUserRange("price");
@@ -241,7 +249,7 @@ public class UserInterface {
     public int convertToInt(String input) {
         Scanner scan = new Scanner(System.in);
 
-        //Checks if the user enters 'x' returns a unsearchable number
+        //Checks if the user enters 'x' returns an unsearchable number
         if (input == null) {
             return -1;
         }
@@ -324,5 +332,64 @@ public class UserInterface {
         dealership.removeVehicle(dealership.getVehiclesByVin(vin).get(0));
         dfm.saveDealership(dealership);
         System.out.println(ColorCodes.RED + "Car removed" + ColorCodes.RESET);
+    }
+
+    public String salesPrompt(String prompt) {
+        Scanner scan = new Scanner(System.in);
+        System.out.println(prompt + " (Enter 'x' to exit)");
+        String input = scan.nextLine();
+        if (input.equalsIgnoreCase("x")) {
+            return null;
+        }
+        return input;
+    }
+
+    public boolean convertToBoolean(String input) {
+        Scanner scan = new Scanner(System.in);
+        while (true) {
+            try {
+                return Boolean.parseBoolean(input.toLowerCase());
+            } catch (NumberFormatException e) {
+                System.out.println("Not true or false, Please enter true or false");
+                input = scan.nextLine();
+                if (input.equalsIgnoreCase("x")) {
+                    return false;
+                }
+            }
+        }
+    }
+
+    public void processSellLeaseVehicle() {
+        Vehicle soldVehicle;
+        String customerName = salesPrompt("What is the customers full name?");
+        String customerEmail = salesPrompt("What is the customers email?");
+        while (true) {
+            int vin = convertToInt(salesPrompt("What is the vin number of th vehicle?"));
+            if (dealership.getVehiclesByVin(vin).size() == 1) {
+                soldVehicle = dealership.getVehiclesByVin(vin).get(0);
+                break;
+            }
+            System.out.println("Could not find car!");
+        }
+        String date = LocalDate.now().toString();
+
+
+        String sellOrLeaseInput = salesPrompt("Would the customer like to sell or lease a vehicle?  (sell/lease)");
+        Contract contract;
+        while (true) {
+            if (sellOrLeaseInput.equalsIgnoreCase("sell")) {
+                boolean isFinancing = convertToBoolean(salesPrompt("Is the customer financing?   (true/false)   "));
+                contract = new SalesContract(date, customerName, customerEmail, soldVehicle, isFinancing);
+                break;
+            } else if (sellOrLeaseInput.equalsIgnoreCase("lease")) {
+                contract = new LeaseContract(date, customerName, customerEmail, soldVehicle);
+                break;
+            } else {
+                System.out.println("Wrong Input");
+            }
+        }
+        new ContractDataManager().saveContract(contract);
+
+
     }
 }
