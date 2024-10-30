@@ -4,16 +4,15 @@ import com.pluralsight.cars.Vehicle;
 
 public class SalesContract extends Contract {
     protected double salesTaxAmount;
-    protected int recordingFee;
+    protected double recordingFee;
     protected int processingFee;
     protected boolean isFinancing;
-    protected int loanAmount;
 
     public SalesContract(String date, String customerName, String customerEmail, Vehicle vehicleSold, boolean isFinancing) {
         super(date, customerName, customerEmail, vehicleSold);
         salesTaxAmount = .05;
         recordingFee = 100;
-        if (vehicleSold.getPrice() <= 10000) {
+        if (vehicleSold.getPrice() < 10000) {
             processingFee = 295;
         } else {
             processingFee = 495;
@@ -21,27 +20,28 @@ public class SalesContract extends Contract {
         this.isFinancing = isFinancing;
 
         if (isFinancing && vehicleSold.getPrice() >= 10000) {
-            monthlyPayment = vehicleSold.getPrice() * .0425;
-            loanAmount = 48;
+            monthlyPayment = getTotalPrice() * .0425;
+        } else if (isFinancing && vehicleSold.getPrice() < 10000) {
+            monthlyPayment = getTotalPrice() * .0525;
         } else {
-            monthlyPayment = vehicleSold.getPrice() * .0525;
-            loanAmount = 24;
+            monthlyPayment = 0;
         }
+
     }
 
     public double getSalesTaxAmount() {
-        return salesTaxAmount * totalPrice;
+        return salesTaxAmount * vehicleSold.getPrice();
     }
 
     public void setSalesTaxAmount(double salesTaxAmount) {
         this.salesTaxAmount = salesTaxAmount;
     }
 
-    public int getRecordingFee() {
+    public double getRecordingFee() {
         return recordingFee;
     }
 
-    public void setRecordingFee(int recordingFee) {
+    public void setRecordingFee(double recordingFee) {
         this.recordingFee = recordingFee;
     }
 
@@ -61,23 +61,15 @@ public class SalesContract extends Contract {
         isFinancing = financing;
     }
 
-    public int getLoanAmount() {
-        return loanAmount;
-    }
-
-    public void setLoanAmount(int loanAmount) {
-        this.loanAmount = loanAmount;
-    }
-
 
     @Override
     public double getTotalPrice() {
-        return (1 + salesTaxAmount) * (vehicleSold.getPrice() * (loanAmount * monthlyPayment) + recordingFee + processingFee);
+        return vehicleSold.getPrice() + recordingFee + processingFee + getSalesTaxAmount();
     }
 
     @Override
     public double getMonthlyPayment() {
-        return monthlyPayment;
+        return Math.floor(monthlyPayment * 100) / 100;
     }
 
 

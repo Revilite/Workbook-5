@@ -21,9 +21,9 @@ class TestDealershipClass {
     @Test
     void getVehiclesByMakeModel_should_return_vehicle_list_with_matching_make_model() {
         Dealership dealership = new Dealership("Scott clark Toyota", "392 shield rd", "980-269-4322");
-        dealership.addVehicle(new Vehicle(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
+        dealership.addVehicle(new VehicleforDummies(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
 
-        List<Vehicle> vehicle = List.of(new Vehicle(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
+        List<Vehicle> vehicle = List.of(new VehicleforDummies(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
 
         assertIterableEquals(vehicle, dealership.getVehiclesByMakeModel("Toyota", "Corolla"));
     }
@@ -31,9 +31,9 @@ class TestDealershipClass {
     @Test
     void getVehiclesByYear_should_return_vehicle_list_with_matching_year() {
         Dealership dealership = new Dealership("Scott clark Toyota", "392 shield rd", "980-269-4322");
-        dealership.addVehicle(new Vehicle(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
+        dealership.addVehicle(new VehicleforDummies(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
 
-        List<Vehicle> vehicle = List.of(new Vehicle(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
+        List<Vehicle> vehicle = List.of(new VehicleforDummies(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
 
         assertIterableEquals(vehicle, dealership.getVehiclesByYear(2000, 2010));
     }
@@ -41,9 +41,9 @@ class TestDealershipClass {
     @Test
     void getVehiclesByColor_should_return_vehicle_list_with_matching_color() {
         Dealership dealership = new Dealership("Scott clark Toyota", "392 shield rd", "980-269-4322");
-        dealership.addVehicle(new Vehicle(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
+        dealership.addVehicle(new VehicleforDummies(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
 
-        List<Vehicle> vehicle = List.of(new Vehicle(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
+        List<Vehicle> vehicle = List.of(new VehicleforDummies(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
 
         assertIterableEquals(vehicle, dealership.getVehiclesByColor("silver"));
     }
@@ -51,9 +51,9 @@ class TestDealershipClass {
     @Test
     void getVehiclesByMileage_should_return_vehicle_list_with_matching_mileages() {
         Dealership dealership = new Dealership("Scott clark Toyota", "392 shield rd", "980-269-4322");
-        dealership.addVehicle(new Vehicle(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
+        dealership.addVehicle(new VehicleforDummies(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
 
-        List<Vehicle> vehicle = List.of(new Vehicle(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
+        List<Vehicle> vehicle = List.of(new VehicleforDummies(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
 
         assertIterableEquals(vehicle, dealership.getVehiclesByMileage(100000, 200000));
     }
@@ -61,9 +61,9 @@ class TestDealershipClass {
     @Test
     void getVehiclesByType_should_return_vehicle_list_with_matching_types() {
         Dealership dealership = new Dealership("Scott clark Toyota", "392 shield rd", "980-269-4322");
-        dealership.addVehicle(new Vehicle(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
+        dealership.addVehicle(new VehicleforDummies(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
 
-        List<Vehicle> vehicle = List.of(new Vehicle(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
+        List<Vehicle> vehicle = List.of(new VehicleforDummies(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
 
         assertIterableEquals(vehicle, dealership.getVehiclesByType("car"));
     }
@@ -71,9 +71,9 @@ class TestDealershipClass {
     @Test
     void getVehiclesByVin_should_return_list_of_cars_with_matching_vin() {
         Dealership dealership = new Dealership("Scott clark Toyota", "392 shield rd", "980-269-4322");
-        dealership.addVehicle(new Vehicle(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
+        dealership.addVehicle(new VehicleforDummies(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
 
-        List<Vehicle> vehicle = List.of(new Vehicle(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
+        List<Vehicle> vehicle = List.of(new VehicleforDummies(2, 2009, "Toyota", "Corolla", "car", "Silver", 189000, 5000));
 
         assertIterableEquals(vehicle, dealership.getVehiclesByVin(2));
     }
