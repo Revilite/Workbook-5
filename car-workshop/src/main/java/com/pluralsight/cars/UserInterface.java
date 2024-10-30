@@ -6,6 +6,7 @@ import com.pluralsight.contract.ContractDataManager;
 import com.pluralsight.contract.LeaseContract;
 import com.pluralsight.contract.SalesContract;
 
+import java.awt.*;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Scanner;
@@ -100,34 +101,35 @@ public class UserInterface {
             String model = String.format(ColorCodes.GREEN + " %-14s ", vehicle.getModel() + ColorCodes.RESET);
             String year = String.format(ColorCodes.BLUE + "      %-14s ", vehicle.getYear() + ColorCodes.RESET);
             String color = String.format(ColorCodes.RED + " %-18s ", vehicle.getColor() + ColorCodes.RESET);
-            String mileage = String.format(ColorCodes.PURPLE + " %-14s ", vehicle.getMileage() + ColorCodes.RESET);
-            String price = String.format(ColorCodes.WHITE + " %-14s ", nf.format(vehicle.getPrice()));
+            String mileage = String.format(ColorCodes.PURPLE + " %-18s ", vehicle.getMileage() + ColorCodes.RESET);
+            String price = String.format(ColorCodes.WHITE + " %-24s ", nf.format(vehicle.getPrice()) + ColorCodes.RESET);
+            String vin = String.format(ColorCodes.CYAN + "%-15s ", vehicle.getVin());
 
             //Used if there is only 1 item in the list
             if (listOfVehicle.size() == 1) {
-                sb.append("╔═════════════╦══════════════╦════════════╦══════════════╦═════════════╦═════════════════╗\n");
-                sb.append("║    Make:    ║   Model:     ║    Year:   ║    Color:    ║   Mileage:  ║   Price:        ║\n");
-                sb.append("╠═════════════╩══════════════╩════════════╩══════════════╩═════════════╩═════════════════╣\n");
-                sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(ColorCodes.RESET).append("║").append("\n");
-                sb.append("╚════════════════════════════════════════════════════════════════════════════════════════╝\n");
+                sb.append("╔═════════════╦══════════════╦════════════╦══════════════╦═════════════╦══════════════════════╦═══════════════════╗\n");
+                sb.append("║    Make:    ║   Model:     ║    Year:   ║    Color:    ║   Mileage:  ║       Price:         ║      VIN:         ║\n");
+                sb.append("╠═════════════╩══════════════╩════════════╩══════════════╩═════════════╩══════════════════════╩═══════════════════╣\n");
+                sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(vin).append(ColorCodes.RESET).append("║").append("\n");
+                sb.append("╚═════════════════════════════════════════════════════════════════════════════════════════════════════════════╝\n");
             }
             //Used as the heading for the list
             else if (listOfVehicle.get(0) == vehicle) {
-                sb.append("╔═════════════╦══════════════╦════════════╦══════════════╦═════════════╦═════════════════╗\n");
-                sb.append("║    Make:    ║   Model:     ║    Year:   ║    Color:    ║   Mileage:  ║   Price:        ║\n");
-                sb.append("╠═════════════╩══════════════╩════════════╩══════════════╩═════════════╩═════════════════╣\n");
-                sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(ColorCodes.RESET).append("║").append("\n");
+                sb.append("╔═════════════╦══════════════╦════════════╦══════════════╦═════════════╦══════════════════════╦════════════════════╗\n");
+                sb.append("║    Make:    ║   Model:     ║    Year:   ║    Color:    ║   Mileage:  ║       Price:         ║      VIN:          ║\n");
+                sb.append("╠═════════════╩══════════════╩════════════╩══════════════╩═════════════╩══════════════════════╩════════════════════╣\n");
+                sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(vin).append(ColorCodes.RESET).append("║").append("\n");
 
                 //Used as the footer for the list
             } else if (listOfVehicle.get(listOfVehicle.size() - 1) == vehicle) {
-                sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(ColorCodes.RESET).append("║").append("\n");
-                sb.append("╚════════════════════════════════════════════════════════════════════════════════════════╝\n");
+                sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(vin).append(ColorCodes.RESET).append("║").append("\n");
+                sb.append("╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝\n");
 
                 return sb.toString();
             }
             //Used as each individual middle list.
             else {
-                sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(ColorCodes.RESET).append("║").append("\n");
+                sb.append("║").append(make).append(model).append(year).append(color).append(mileage).append(price).append(vin).append(ColorCodes.RESET).append("║").append("\n");
             }
 
         }

@@ -80,4 +80,14 @@ class SalesContractTest {
 
         assertEquals(monthlyPrice, contract.getMonthlyPayment());
     }
+
+    @Test
+    void isFinancing_is_false_monthlyPrice_is_0() {
+        Vehicle vehicle = new Vehicle(123124, 2000, "Toyota", "Corolla", "Car", "Silver", 209000, 15000);
+        SalesContract contract = new SalesContract(LocalDate.now().toString(), "Jacob Lockhart", "procoder165@gmail.com", vehicle, false);
+
+        double monthlyPrice = 0;
+
+        assertEquals(monthlyPrice, contract.getMonthlyPayment());
+    }
 }
