@@ -25,9 +25,17 @@ public class ContractDataManager {
             boolean isFinancing = ((SalesContract) contract).isFinancing();
             double monthlyPrice = contract.getMonthlyPayment();
 
+            String formattedFinancing;
+            if(isFinancing) {
+                formattedFinancing = "YES";
+            }
+            else{
+                formattedFinancing = "NO";
+            }
+
             String saveToCSV = String.format("""
-                    Sale|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%.2f|%.2f|%.2f|%.2f|%.2f|%s|%.2f
-                    """, date, name, email, vin, year, make, model, type, color, odometer, price, salesTax, recordingFee, processingFee, totalPrice, isFinancing, monthlyPrice);
+                    SALE|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%.2f|%.2f|%.2f|%.2f|%.2f|%s|%.2f
+                    """, date, name, email, vin, year, make, model, type, color, odometer, price, salesTax, recordingFee, processingFee, totalPrice, formattedFinancing, monthlyPrice);
 
             new ContractFileManager().saveToFile(saveToCSV);
         }

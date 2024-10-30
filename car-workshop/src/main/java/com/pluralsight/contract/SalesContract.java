@@ -8,8 +8,8 @@ public class SalesContract extends Contract {
     protected int processingFee;
     protected boolean isFinancing;
 
-    public SalesContract(String date, String customerName, String customerEmail, Vehicle vehicleSold, boolean isFinancing) {
-        super(date, customerName, customerEmail, vehicleSold);
+    public SalesContract(String customerName, String customerEmail, Vehicle vehicleSold, boolean isFinancing) {
+        super(customerName, customerEmail, vehicleSold);
         salesTaxAmount = .05;
         recordingFee = 100;
         if (vehicleSold.getPrice() < 10000) {

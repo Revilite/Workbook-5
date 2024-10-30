@@ -6,7 +6,6 @@ import com.pluralsight.contract.ContractDataManager;
 import com.pluralsight.contract.LeaseContract;
 import com.pluralsight.contract.SalesContract;
 
-import java.awt.*;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Scanner;
@@ -349,42 +348,52 @@ public class UserInterface {
     public boolean convertToBoolean(String input) {
         Scanner scan = new Scanner(System.in);
         while (true) {
-            try {
-                return Boolean.parseBoolean(input.toLowerCase());
-            } catch (NumberFormatException e) {
-                System.out.println("Not true or false, Please enter true or false");
+            if (input.equalsIgnoreCase("yes")) {
+                return true;
+            } else if (input.equalsIgnoreCase("no")) {
+                return false;
+            } else {
+                System.out.println("Not Yes or No, Please enter Yes or No");
                 input = scan.nextLine();
-                if (input.equalsIgnoreCase("x")) {
-                    return false;
-                }
             }
+
         }
     }
 
     public void processSellLeaseVehicle() {
         Vehicle soldVehicle;
         String customerName = salesPrompt("What is the customers full name?");
+        if (customerName == null) {
+            return; //Returns to main menu
+        }
+
         String customerEmail = salesPrompt("What is the customers email?");
+        if (customerEmail == null) {
+            return; //Returns to main menu
+        }
+
         while (true) {
             int vin = convertToInt(salesPrompt("What is the vin number of th vehicle?"));
             if (dealership.getVehiclesByVin(vin).size() == 1) {
                 soldVehicle = dealership.getVehiclesByVin(vin).get(0);
                 break;
             }
+            if (vin == -1) {
+                return; //Returns to main menu
+            }
             System.out.println("Could not find car!");
         }
-        String date = LocalDate.now().toString();
-
 
         String sellOrLeaseInput = salesPrompt("Would the customer like to sell or lease a vehicle?  (sell/lease)");
         Contract contract;
         while (true) {
             if (sellOrLeaseInput.equalsIgnoreCase("sell")) {
-                boolean isFinancing = convertToBoolean(salesPrompt("Is the customer financing?   (true/false)   "));
-                contract = new SalesContract(date, customerName, customerEmail, soldVehicle, isFinancing);
+                boolean isFinancing = convertToBoolean(salesPrompt("Is the customer financing?  (Yes/No)   "));
+
+                contract = new SalesContract(customerName, customerEmail, soldVehicle, isFinancing);
                 break;
             } else if (sellOrLeaseInput.equalsIgnoreCase("lease")) {
-                contract = new LeaseContract(date, customerName, customerEmail, soldVehicle);
+                contract = new LeaseContract(customerName, customerEmail, soldVehicle);
                 break;
             } else {
                 System.out.println("Wrong Input");
