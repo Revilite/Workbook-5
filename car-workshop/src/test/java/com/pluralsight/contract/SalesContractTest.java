@@ -3,8 +3,6 @@ package com.pluralsight.contract;
 import com.pluralsight.cars.Vehicle;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class SalesContractTest {
@@ -55,7 +53,7 @@ class SalesContractTest {
         Vehicle vehicle = new Vehicle(123124, 2000, "Toyota", "Corolla", "Car", "Silver", 209000, 5000);
         SalesContract contract = new SalesContract("Jacob Lockhart", "procoder165@gmail.com", vehicle, true);
 
-        double totalPrice = 5645;
+        double totalPrice = 1495.07;
 
         assertEquals(totalPrice, contract.getTotalPrice());
     }
@@ -65,7 +63,7 @@ class SalesContractTest {
         Vehicle vehicle = new Vehicle(123124, 2000, "Toyota", "Corolla", "Car", "Silver", 209000, 5000);
         SalesContract contract = new SalesContract("Jacob Lockhart", "procoder165@gmail.com", vehicle, true);
 
-        double monthlyPrice = 296.36;
+        double monthlyPrice = 43.76;
 
         assertEquals(monthlyPrice, contract.getMonthlyPayment());
     }

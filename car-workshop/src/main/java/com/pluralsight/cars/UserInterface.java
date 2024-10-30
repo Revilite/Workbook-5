@@ -9,7 +9,6 @@ import com.pluralsight.contract.SalesContract;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Scanner;
-import java.time.LocalDate;
 
 public class UserInterface {
     private Dealership dealership;

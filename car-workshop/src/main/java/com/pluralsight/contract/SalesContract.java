@@ -5,12 +5,12 @@ import com.pluralsight.cars.Vehicle;
 public class SalesContract extends Contract {
     protected double salesTaxAmount;
     protected double recordingFee;
-    protected int processingFee;
+    protected double processingFee;
     protected boolean isFinancing;
 
     public SalesContract(String customerName, String customerEmail, Vehicle vehicleSold, boolean isFinancing) {
         super(customerName, customerEmail, vehicleSold);
-        salesTaxAmount = .05;
+        salesTaxAmount = .05 * vehicleSold.getPrice();
         recordingFee = 100;
         if (vehicleSold.getPrice() < 10000) {
             processingFee = 295;
@@ -20,9 +20,12 @@ public class SalesContract extends Contract {
         this.isFinancing = isFinancing;
 
         if (isFinancing && vehicleSold.getPrice() >= 10000) {
-            monthlyPayment = getTotalPrice() * .0425;
+            double i = .0425 / 12;
+            int n = 48;
+
+            monthlyPayment = (getTotalPrice() * .0425) / 12;
         } else if (isFinancing && vehicleSold.getPrice() < 10000) {
-            monthlyPayment = getTotalPrice() * .0525;
+            monthlyPayment = getTotalPrice() * Math.pow((1 + (.0525 / 12)), 24) - getTotalPrice();
         } else {
             monthlyPayment = 0;
         }
@@ -30,41 +33,27 @@ public class SalesContract extends Contract {
     }
 
     public double getSalesTaxAmount() {
-        return salesTaxAmount * vehicleSold.getPrice();
-    }
-
-    public void setSalesTaxAmount(double salesTaxAmount) {
-        this.salesTaxAmount = salesTaxAmount;
+        return salesTaxAmount;
     }
 
     public double getRecordingFee() {
         return recordingFee;
     }
 
-    public void setRecordingFee(double recordingFee) {
-        this.recordingFee = recordingFee;
-    }
 
-    public int getProcessingFee() {
+    public double getProcessingFee() {
         return processingFee;
     }
 
-    public void setProcessingFee(int processingFee) {
-        this.processingFee = processingFee;
-    }
 
     public boolean isFinancing() {
         return isFinancing;
     }
 
-    public void setFinancing(boolean financing) {
-        isFinancing = financing;
-    }
-
 
     @Override
     public double getTotalPrice() {
-        return vehicleSold.getPrice() + recordingFee + processingFee + getSalesTaxAmount();
+        return vehicleSold.getPrice() + recordingFee + processingFee + salesTaxAmount;
     }
 
     @Override
@@ -72,5 +61,11 @@ public class SalesContract extends Contract {
         return Math.floor(monthlyPayment * 100) / 100;
     }
 
-
+    @Override
+    public String toString() {
+        //TODO: Change is financing to YES or NO
+        return String.format("""
+                SALE|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%.2f|%.2f|%.2f|%.2f|%.2f|%s|%.2f\n
+                """, date, customerName, customerEmail, vehicleSold.getVin(), vehicleSold.getYear(), vehicleSold.getMake(), vehicleSold.getModel(), vehicleSold.getVehicleType(), vehicleSold.getColor(), vehicleSold.getOdometer(), vehicleSold.getPrice(), salesTaxAmount, recordingFee, processingFee, totalPrice, isFinancing ? "YES" : "NO", monthlyPayment);
+    }
 }

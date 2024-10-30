@@ -1,0 +1,44 @@
+@startuml
+abstract class WildAnimal {
++ void eat()
+}
+
+class Tiger {
+}
+class Farm {
+~ ArrayList<FarmAnimal> animals
++ void addAnimals(FarmAnimal)
++ void feedAnimals()
+}
+
+
+class Cat {
++ void eat()
+}
+
+class Dog {
++ void eat()
+}
+
+class Main {
++ {static} void main(String[])
+}
+
+abstract class Animal {
++ {abstract}void eat()
+}
+
+abstract class FarmAnimal {
+- String name
++ String getName()
+}
+
+
+
+
+Animal <|-- WildAnimal
+WildAnimal <|-- Tiger
+FarmAnimal <|-- Cat
+FarmAnimal <|-- Dog
+Animal <|-- FarmAnimal
+@enduml
