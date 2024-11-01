@@ -6,11 +6,11 @@ import java.util.Scanner;
 
 public class AdminUserInterface {
     //Tried to set .env file but can figure out how to import right class
-    private final String password = "IN33dH3lp";
     private ContractDataManager cdm = new ContractDataManager();
 
     public void logIn(String password) {
-        if (password.equalsIgnoreCase(this.password)) {
+        //Set your password in configurations when running the file
+        if (password.equalsIgnoreCase(System.getenv("PASSWORD"))) {
             cdm.initContracts();
             displayContracts();
         } else {
@@ -34,7 +34,7 @@ public class AdminUserInterface {
             case ("1"):
                 processDisplayAllContracts();
                 break;
-            case("2"):
+            case ("2"):
                 processDisplayTenContracts();
                 break;
             default:
@@ -46,7 +46,6 @@ public class AdminUserInterface {
     public String displayContractList(List<Contract> contracts) {
         StringBuilder sb = new StringBuilder();
 
-
         for (Contract contract : contracts) {
 
             //Contract variables
@@ -55,7 +54,7 @@ public class AdminUserInterface {
             String email = contract.getCustomerEmail();
             double monthlyPayment = contract.getMonthlyPayment();
             double totalAmount = contract.getTotalPrice();
-            int vin  = contract.getVehicleSold().getVin();
+            int vin = contract.getVehicleSold().getVin();
 
             String heading = "  Type    Date          Name             Email                    Sales Tax/Ending Value   Recording Fee / Lease Fee     Total Amount    Finance Status   Monthly Payment         Vin\n";
 
@@ -102,7 +101,6 @@ public class AdminUserInterface {
             }
         }
         return sb.toString();
-
     }
 
     public void processDisplayAllContracts() {
