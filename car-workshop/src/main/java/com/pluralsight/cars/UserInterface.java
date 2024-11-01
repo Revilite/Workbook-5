@@ -1,10 +1,7 @@
 package com.pluralsight.cars;
 
 import com.pluralsight.cars.JavaHelpers.ColorCodes;
-import com.pluralsight.contract.Contract;
-import com.pluralsight.contract.ContractDataManager;
-import com.pluralsight.contract.LeaseContract;
-import com.pluralsight.contract.SalesContract;
+import com.pluralsight.contract.*;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -44,6 +41,7 @@ public class UserInterface {
                     ║ Add a vehicle                      (8)   ║
                     ║ Remove a vehicle                   (9)   ║
                     ║ Sell/Lease a vehicle               (10)  ║
+                    ║ Admin Interface                    (11)  ║
                     ║ Quit                               (99)  ║
                     ╚══════════════════════════════════════════╝%s
                     %n""", ColorCodes.BLUE, ColorCodes.RESET);
@@ -79,6 +77,9 @@ public class UserInterface {
                     break;
                 case ("10"):
                     processSellLeaseVehicle();
+                    break;
+                case ("11"):
+                    processAdminUI();
                     break;
                 case ("99"):
                     break;
@@ -400,6 +401,12 @@ public class UserInterface {
         }
         new ContractDataManager().saveContract(contract);
 
+
+    }
+
+    public void processAdminUI() {
+        Scanner scan = new Scanner(System.in);
+        new AdminUserInterface().logIn(salesPrompt("What is the password?"));
 
     }
 }

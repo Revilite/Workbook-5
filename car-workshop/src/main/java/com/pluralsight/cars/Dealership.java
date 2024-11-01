@@ -44,7 +44,7 @@ public class Dealership {
         return inventory.stream().filter((c) -> c.getYear() >= min && c.getYear() <= max).sorted(Comparator.comparingInt(Vehicle::getYear).reversed()).toList();
     }
 
-    //Filters by the color and sorts by lowest prices with the if there is more than 1 car with the same color
+    //Filters by the color and sorts by lowest prices with if there is more than 1 car with the same color
     public List<VehicleforDummies> getVehiclesByColor(String color) {
         return inventory.stream().filter((c) -> c.getColor().equalsIgnoreCase(color)).sorted(Comparator.comparingDouble(Vehicle::getPrice)).toList();
     }

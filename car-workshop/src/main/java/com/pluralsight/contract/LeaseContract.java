@@ -7,6 +7,12 @@ public class LeaseContract extends Contract {
     protected double leaseFee;
 
 
+    public LeaseContract(String date, String customerName, String customerEmail, Vehicle vehicleSold) {
+        super(date, customerName, customerEmail, vehicleSold);
+        expectedEndingValue = vehicleSold.getPrice() / 2;
+        leaseFee = vehicleSold.getPrice() * .07;
+    }
+
     public LeaseContract(String customerName, String customerEmail, Vehicle vehicleSold) {
         super(customerName, customerEmail, vehicleSold);
         expectedEndingValue = vehicleSold.getPrice() / 2;
@@ -38,8 +44,3 @@ public class LeaseContract extends Contract {
                 """, date, customerName, customerEmail, vehicleSold.getVin(), vehicleSold.getYear(), vehicleSold.getMake(), vehicleSold.getModel(), vehicleSold.getVehicleType(), vehicleSold.getColor(), vehicleSold.getOdometer(), vehicleSold.getPrice(), expectedEndingValue, leaseFee, totalPrice, monthlyPayment);
     }
 }
-//total price  = leasefee * (36 * monthly payment) == half of principle == expected ending value
-// 4% / 12 + whatever is covered by the rest of the payment
-// Residual 15997.50
-// Lease fee 2239.65
-//
